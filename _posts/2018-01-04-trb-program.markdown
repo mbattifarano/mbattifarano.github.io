@@ -5,7 +5,7 @@ date:   2018-01-04 10:00:00 -0500
 categories: trb
 ---
 
-With [TRB 2018](http://www.trb.org/AnnualMeeting/AnnualMeeting.aspx) only a few days away I thought I'd go over the program I've created for myself and highlight a few of the sessions I'm particularly eager to attend.
+With [TRB 2018](http://www.trb.org/AnnualMeeting/AnnualMeeting.aspx) only a few days away I thought I'd share a few of the sessions I'm particularly eager to attend.
 
 If you find yourself at one of these I'd love to meet you.
 
