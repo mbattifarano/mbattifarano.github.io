@@ -4,15 +4,8 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+I apply advances in computing, sensing, data engineering, machine learning, and artificial intelligence to improve transportation systems.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+My research in the [Mobility Data Analytics Center](http://mac.heinz.cmu.edu/) at Carnegie Mellon University examines the role of new and emerging technologies in transportation and their impacts on mobility. I focus on transportation network modeling with shared mobility, connected vehicles, and autonomous vehicles in order to develop strategies for their deployment.
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+Previously, I served as a data scientist at Bridj, a small firm designing and deploying a smart micro-bus platform for urban transit. I worked at the intersection of research and software engineering, building models of transit demand and operationalizing our fleet routing optimization engine.
