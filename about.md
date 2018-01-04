@@ -4,6 +4,8 @@ title: About
 permalink: /about/
 ---
 
+![Me]({{ "/assets/mattbattifarano.jpg" | absolute_url }})
+
 I apply advances in computing, sensing, data engineering, machine learning, and artificial intelligence to improve transportation systems. I am currently a PhD student in the Department of Civil and Environmental Engineering at Carnegie Mellon University.
 
 My research in the [Mobility Data Analytics Center](http://mac.heinz.cmu.edu/) at Carnegie Mellon University examines the role of new and emerging technologies in transportation and their impacts on mobility. I focus on transportation network modeling with shared mobility, connected vehicles, and autonomous vehicles in order to develop strategies for their deployment.
