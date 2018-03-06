@@ -1,0 +1,4 @@
+.centering { margin: auto; text-align: center; width: 80%; }
+.figure { width: 50%;}
+.figure-wide { width: 80%; }
+.subfigure { display: inline-flex; }
