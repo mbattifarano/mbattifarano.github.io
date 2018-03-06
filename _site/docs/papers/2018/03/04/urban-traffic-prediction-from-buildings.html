@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Urban Traffic Prediction through the Second Use of Inexpensive Big Data from Buildings</title>
+  <meta name="description" content="Efforts to measure mobility in cities though mining increasingly available urban data are hindered by fragmented and purpose-specific data sources. Synthesiz...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/katex/katex.min.css">
+  <link rel="stylesheet" href="/assets/css/extra.css">
+  <link rel="canonical" href="/papers/2018/03/04/urban-traffic-prediction-from-buildings.html">
+  <link rel="alternate" type="application/rss+xml" title="Matt Battifarano" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Matt Battifarano</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/assets/katex/"></a>
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+  <div class="wrapper">
+	  PhD Student &middot; Transportation Researcher &middot; Data Scientist &middot; Software Engineer
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Urban Traffic Prediction through the Second Use of Inexpensive Big Data from Buildings</h1>
+    <p class="post-meta">
+      <time datetime="2018-03-04T10:00:00-05:00" itemprop="datePublished">
+        
+        Mar 4, 2018
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Efforts to measure mobility in cities though mining increasingly available urban data are hindered by fragmented and purpose-specific data sources. Synthesizing disparate data sources to learn transportation network behavior is essential to more accurately simulate the consequences of changes in policy or in the built environment. In this paper<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> Zheng et. al. show that building occupancy data estimated from existing building sensor can improve the accuracy of traffic speed predictions. More impressively, they show that occupancy data alone can predict traffic as well as dedicated traffic monitoring systems for a fraction of the cost.</p>
+
+<h2 id="traffic-prediction-research">Traffic prediction research</h2>
+
+<div class="centering">
+<img src="/assets/images/research-line-traffic-prediction.png" alt="Traffic prediction research" class="figure" />
+<p>Taxonomy of traffic prediction research (figure 2)</p>
+</div>
+
+<p>Broadly, traffic prediction research aims to predict the traffic status of a road or road network and is an essential tool in developing and assessing congestion reduction strategies. With estimates of the annual cost of congestion in the US well in excess of $100 billion and rising, reducing congestion is a priority in almost every city.</p>
+
+<p>Within the research area of short-term single location traffic prediction, external information is often used along with historical traffic data to improve prediction accuracy. Weather and weekday/holiday information are popular candidates because their influence on traffic is not recoverable from the traffic data itself. However, external data is often not sufficient to replace the historical traffic data in the predictive model. Importantly, Zhang et.al. show that occupancy data alone can predict traffic status after a calibration period.</p>
+
+<p>Occupancy sensing in buildings is an area of research in its own right. Buildings can more efficiently regulate systems like HVAC when the occupancy of the building or individual rooms is known. Like traffic, measuring occupancy directly is hard and several methods for estimating occupancy from sensor measurements have been developed. The authors selected CO2 concentration as an occupancy because it is widely available as part of ventilation management systems and well-correlated with occupancy.</p>
+
+<h2 id="occupancy-based-traffic-prediction-framework">Occupancy-based traffic prediction framework</h2>
+
+<div class="centering">
+<img src="/assets/images/occ-trac-prediction-framework.png" alt="Traffic prediction framework" class="figure" />
+<p>The traffic prediction framework (figure 4)</p>
+</div>
+
+<p>The prediction framework encompasses two run-time modes: prediction with a permanent traffic sensor (TPO-P) and prediction with a temporary traffic sensor (TPO-T). Both modes require traffic data during the training phase, but only TPO-P requires traffic data in the prediction phase.</p>
+
+<h3 id="estimating-occupancy-in-each-zone">Estimating occupancy in each zone</h3>
+
+<p>First, CO2 concentration is converted into room occupancy using a time-varying <strong>Occupancy Estimation Model (OEM)</strong>. The model is a dynamic extension of a steady-state formula used by the American Society of Heating, Refrigeration and Air Conditioning Engineers (ASHRAE). The authors introduce the model fully in a previous paper<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup> but the take-home message is that ventilation standards require the system to circulate enough air to keep CO2 concentration below an acceptable level. CO2 concentration in buildings is primarily a function of occupancy, so the authors were able to reverse engineer measurements already being collected to estimate occupancy.</p>
+
+<h3 id="relating-changes-in-occupancy-to-changes-in-traffic">Relating changes in occupancy to changes in traffic</h3>
+
+<p>Changes in occupancy don’t immediately result in changes in traffic. Moreover, the delay between changes in occupancy and changes in traffic itself may change over time. To solve this, the authors apply a modified <strong>Dynamic Time Warping (DTW) algorithm</strong> to map changes in occupancy to changes in traffic through time. These <em>time-warp offsets</em> compose the Occupancy-Traffic Model in the framework diagram.</p>
+
+<div class="centering">
+<img src="/assets/images/DTW-OT-map.png" alt="example time warp map generated by DTW-OT" class="figure" />
+<p>An example time warp map between occupancy (top line) and traffic speed (bottom line) (figure 7)</p>
+</div>
+
+<p>The training phase in both TPO-T and TPO-P has access to traffic information, but this information will clearly not available for the time being predicted. To solve this, a <strong>Kernel Average (KA) algorithm</strong> is applied to create a similarity-weighted average of the time-warp offsets from the training phase. Based on the intuition that days with similar occupancies will have similar traffic, the Kernel Average algorithm weights days from the training set by similarity to the current day. Time-warp offsets for the prediction window are built from the weighted contributions of the time-warp offsets from the training set.</p>
+
+<h3 id="selecting-important-time-slots-and-zones">Selecting important time slots and zones</h3>
+
+<p>Changes in occupancy at different times and different zones of the building have variable impact on the traffic status. Some zones, for example, may contain a large contingent of public transit riders whose commute has a much smaller impact on traffic than the commutes of those who drive. Using occupancy data from times and zones with the greatest impact on traffic reduces prediction error caused by over-fitting during the training phase.</p>
+
+<p>The most important time slots are selected using <strong>Lasso</strong>, a common technique in statistics and machine learning to encourage sparse coefficients. Lasso works by jointly minimizing an error term (mean squared error in linear regression) and a regularization term <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>λ</mi><mi mathvariant="normal">∥</mi><mi>β</mi><mi mathvariant="normal">∥</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda\|\beta\|1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit">λ</span><span class="mord mathrm">∥</span><span class="mord mathit" style="margin-right:0.05278em;">β</span><span class="mord mathrm">∥</span><span class="mord mathrm">1</span></span></span></span><sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup>. The 1-norm of the coefficient vector <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.05278em;">β</span></span></span></span> will tend to push many coefficients to zero, effectively selecting only a few important coefficients.</p>
+
+<p>The most important zones are selecting by recursively eliminating irrelevant zones. As the name implies <strong>Recursive Feature Elimination (RFE)</strong> iteratively removes features based on an importance weight assigned to it by the predictor. Here, the authors simply use prediction accuracy of each zone to remove zones that do not contribute to the predictive power of the model.</p>
+
+<h3 id="predicting-traffic-speed">Predicting traffic speed</h3>
+
+<p>Once the most important zone-time features have been extracted, the prediction model uses <strong>Locally Weighted Linear Regression (LWR)</strong> to predict traffic. LWR retains the simplicity and interpretability of linear regression with the expressiveness of a more complex model. It achieves this by first weighting each point in the training set by its similarity to the test point. Then during fitting, the residual at each point is multiplied by its weight. As a result, the line of best fit will focus on predicting points near the test point and ignore those further away.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup> In TPO-P the features are the occupancy features and the corresponding traffic information and in TPO-T the features are just the occupancy features.</p>
+
+<h2 id="evaluating-the-model">Evaluating the model</h2>
+
+<p>TPO-P out performs both Google maps traffic predictions and the prediction of the traffic sensor alone and TPO-T performs as well as the traffic sensor predictions. To test their model, the authors collected four months of occupancy data from a large office building in Hong Kong and traffic data from a nearby roadway. During the latter half of the day we intuitively expect changes in occupancy to be a <em>leading indicator</em> of traffic, as workers leave the building to begin their commute. However, during the morning we expect the opposite: workers enter the building to end their commute. In the morning we would therefore expect occupancy to be a <em>lagging indicator</em> of traffic. It would be interesting to see if this phenomenon is evident in the time-warp offsets over the course of the day and how this affects the prediction accuracy.</p>
+
+<div class="centering">
+<img src="/assets/images/mse-TPO-TP-vs-others.png" alt="MSE of TPO-P and TPO-T vs other methods" class="figure-wide" />
+<p>At left, the prediction accuracy of TPO-P compared with Google Maps traffic and the traffic sensor alone (figure 9). At right, the prediction accuracy of TPO-T compared with the traffic sensor alone (figure 17).</p>
+</div>
+
+<h2 id="whats-next">What’s next</h2>
+
+<p>During the evening at least, building occupancy predicts traffic speed as well as traffic monitoring systems can for less than 30% of the cost. Portable traffic sensors can be deployed on a rotating subset of the roadways to train TPO-T on nearby building occupancies. Once trained, these portable sensors can be re-deployed to train new areas. This strategy offers significant cost savings over the  set up and maintenance of permanent traffic sensors.</p>
+
+<p>Since the model uses occupancy data from multiple zones in a building, it trivially extends to occupancy data from multiple buildings. Predicting the traffic state of multiple roadways, however, is accomplished by predicting each road independently. An interesting extension would be explicitly model the relationships between roadways, potentially through multi-task learning<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup>, to improve the prediction accuracy on the network.</p>
+
+<p>Alternatively, buildings might be modeled as a network as well. If office buildings are lagging indicators of traffic in the morning and leading indicators in the evening, then residential towers are leading indicators in the morning and lagging indicators in the evening. Exploiting dependencies between buildings through the road network could additionally improve traffic predictions.</p>
+
+<p>Cities are producing vast amounts of data; much of which is only ever used within the system it was designed to measure. But the behavior of cities, and transportation networks especially, emerge from interactions of many urban systems. This paper demonstrates the value internal data to external systems and an example of how theoretical models and machine-learning techniques can be applied in tandem to better measure urban mobility.</p>
+
+<hr />
+
+<p><strong>Shout Outs</strong></p>
+
+<ul>
+  <li>Adrian Colyer over at <a href="https://blog.acolyer.org/">the morning paper</a> for the inspiration to try something like this.</li>
+  <li>Dr. Jennifer Raff for <a href="http://blogs.lse.ac.uk/impactofsocialsciences/2016/05/09/how-to-read-and-understand-a-scientific-paper-a-guide-for-non-scientists/?imm_mid=0f3e4b&amp;cmp=em-na-na-na-newsltr_four_short_links_20170627">this helpful guide</a> which served as the structural template for this post.</li>
+</ul>
+
+<p><strong>References</strong></p>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Zheng, Z., Wang, D., Pei, J., Yuan, Y., Fan, C., &amp; Xiao, F. (2016). Urban Traffic Prediction through the Second Use of Inexpensive Big Data from Buildings. In Proceedings of the 25th ACM International on Conference on Information and Knowledge Management - CIKM ’16 (pp. 1363–1372). <a href="https://doi.org/10.1145/2983323.2983357">https://doi.org/10.1145/2983323.2983357</a>. <a href="http://www4.comp.polyu.edu.hk/~csdwang/Publication/occTraf.pdf">pdf</a>. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>Sun, Z., Wang, S., &amp; Ma, Z. (2011). In-situ implementation and validation of a CO2-based adaptive demand-controlled ventilation strategy in a multi-zone office building. Building and Environment, 46(1), 124–133. <a href="https://doi.org/10.1016/j.buildenv.2010.07.008">https://doi.org/10.1016/j.buildenv.2010.07.008</a>. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>For a deeper dive, see <a href="http://www.stat.cmu.edu/~larry/=sml/sparsity.pdf">these lecture notes</a> from the Statistical Machine Learning course here at CMU <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p>For a deeper dive with an overview of local and global learning, see <a href="http://learning.cis.upenn.edu/cis520_fall2009/index.php?n=Lectures.LocalLearning">this webpage</a> from UPenn <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:5">
+      <p><a href="https://en.wikipedia.org/wiki/Multi-task_learning">Multi-task learning on Wikipedia</a> <a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Matt Battifarano</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              Matt Battifarano
+            
+            </li>
+            
+            <li><a href="mailto:matthew.battifarano@gmail.com">matthew.battifarano@gmail.com</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/mbattifarano"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">mbattifarano</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.linkedin.com/in/mbattifarano"><span class="icon icon--github"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="16"
+   width="16"
+   version="1.0"
+   id="svg17"
+   sodipodi:docname="icon-linkedin.svg"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <metadata
+     id="metadata21">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1021"
+     inkscape:window-height="708"
+     id="namedview19"
+     showgrid="false"
+     inkscape:zoom="1.18"
+     inkscape:cx="100"
+     inkscape:cy="99.982452"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg17" />
+  <defs
+     id="defs7">
+    <linearGradient
+       id="linearGradient3003"
+       y2="425.39999"
+       gradientUnits="userSpaceOnUse"
+       x2="-395.85001"
+       gradientTransform="matrix(-0.50335197,0,0,0.50335205,-148.17928,-158.80197)"
+       y1="274.70999"
+       x1="-344.14999">
+      <stop
+         stop-color="#FFF"
+         offset="0"
+         id="stop2" />
+      <stop
+         stop-color="#FFF"
+         stop-opacity="0"
+         offset="1"
+         id="stop4" />
+    </linearGradient>
+  </defs>
+  <rect
+     transform="scale(-1,1)"
+     rx="2.41608"
+     ry="2.4163218"
+     height="16"
+     width="16"
+     y="0"
+     x="-16"
+     id="rect9"
+     style="fill:#006699;stroke-width:0.08000401" />
+  <path
+     d="M 5.11936,13.428444 V 6.1569938 H 2.70272 v 7.2714502 z m -1.208,-8.2648302 c 0.84272,0 1.36728,-0.55837 1.36728,-1.25613 -0.015706,-0.7135 -0.524528,-1.25636 -1.35128,-1.25636 -0.82664,0 -1.3672,0.54287 -1.3672,1.25636 0,0.6978 0.524424,1.25613 1.33544,1.25613 h 0.015706 z"
+     id="path13"
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;stroke-width:0.08000401" />
+  <path
+     d="M 6.45696,13.428444 H 8.8736 V 9.3677138 c 0,-0.21733 0.015706,-0.43443 0.079518,-0.58978 0.174704,-0.43421 0.572336,-0.88393 1.23992,-0.88393 0.87448,0 1.22432,0.66681 1.22432,1.64433 v 3.8900702 h 2.41648 V 9.2590238 c 0,-2.2335 -1.19224,-3.27273 -2.78224,-3.27273 -1.30368,0 -1.87608,0.72879 -2.19408,1.22516 h 0.016136 v -1.05458 h -2.41664 c 0.031713,0.68231 0,7.2714502 0,7.2714502 z"
+     id="path15"
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;stroke-width:0.08000401" />
+</svg>
+</span><span class="username">mbattifarano</span></a>
+
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>I apply advances in computing, sensing, data engineering, machine learning, and artificial intelligence to improve transportation systems. This is my website.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
