@@ -13,3 +13,5 @@ My research in the [Mobility Data Analytics Center](http://mac.heinz.cmu.edu/) a
 Previously, I served as a data scientist at [Bridj](http://www.bridj.com/), a small firm designing and deploying a smart micro-bus platform for urban transit. I worked at the intersection of research and software engineering building models of transit demand and operationalizing our fleet routing optimization engine. Additionally, I served as a consultant to Transit Systems Austrlia during their acquistion of the Bridj software.
 
 I graduated from the University of Chicago in 2012 with major in Mathematics and a minor in Computational Neuroscience.
+
+[Resume]({{ "assets/cv-battifarano.pdf" | absolute_url }})
